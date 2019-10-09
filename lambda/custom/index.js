@@ -2,7 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
-const commands = require('./gitCommands');
+const commands = require('./gitCommands').default;
 const utterances = require('./utterances');
 
 const i18n = require('i18next');
@@ -45,48 +45,30 @@ const getCommandHandler = {
 
     let commandReference = actionSlot.toLowerCase() + '_' + thingSlot.toLowerCase();
 
-    const cardTitle = requestAttributes.t('DISPLAY_CARD_TITLE', requestAttributes.t('SKILL_NAME'), commandReference);
     const myCommands = requestAttributes.t('COMMANDS');
     const command = myCommands[commandReference];
     let speakOutput = '';
 
     if (command) {
       sessionAttributes.speakOutput = command;
-      // uncomment the _2_ reprompt lines if you want to repeat the info
-      // and prompt for a subsequent action
-      // sessionAttributes.repromptSpeech = requestAttributes.t('RECIPE_REPEAT_MESSAGE');
       handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
       return handlerInput.responseBuilder
         .speak(sessionAttributes.speakOutput)
-        // .reprompt(sessionAttributes.repromptSpeech)
-        .withSimpleCard(cardTitle, command)
-        .askToSendText() //calling function where it ask user to send message
+        // .addDelegateDirective('sendCommandIntent') // TODO: check to see if this works.
         .getResponse();
     }
 
-    const repromptSpeech = requestAttributes.t('NOT_FOUND_REPROMPT');
-    if (commandReference) {
-      // TODO: this should be the original command spoken not the commandReference
-      speakOutput += requestAttributes.t('NOT_FOUND_WITH_ITEM_NAME', commandReference); 
-    } else {
-      speakOutput += requestAttributes.t('NOT_FOUND_WITHOUT_ITEM_NAME');
-    }
-    speakOutput += repromptSpeech;
-
     // save outputs to attributes, so we can use it to repeat
     sessionAttributes.speakOutput = speakOutput;
-    sessionAttributes.repromptSpeech = repromptSpeech;
 
     handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
     return handlerInput.responseBuilder
       .speak(sessionAttributes.speakOutput)
-      .reprompt(sessionAttributes.repromptSpeech)
       .getResponse();
   },
 };
-
 
 // TODO: sendCommandHandler fn
 
@@ -161,8 +143,8 @@ const ErrorHandler = {
     console.log(`Error handled: ${error.message}`);
 
     return handlerInput.responseBuilder
-      .speak('Sorry, I can\'t understand the command. Please say again.')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak('Sorry, I can\'t understand the command. Please say it again.')
+      .reprompt('Sorry, I can\'t understand the command. Please say it again.')
       .getResponse();
   },
 };
@@ -220,14 +202,10 @@ const languageStrings = {
       SKILL_NAME: 'gitHelp',
       WELCOME_MESSAGE: 'Welcome to %s. You can ask a question like, %s ... Now, what can I help you with?',
       WELCOME_REPROMPT: 'For instructions on what you can say, please say help me.',
-      DISPLAY_CARD_TITLE: '%s  - Command for %s.',
       HELP_MESSAGE: 'You can ask questions such as, %s, or, you can say exit...Now, what can I help you with?',
       HELP_REPROMPT: 'You can say things like, %s, or you can say exit...Now, what can I help you with?',
       STOP_MESSAGE: 'Goodbye!',
       REPEAT_MESSAGE: 'Try saying repeat.',
-      NOT_FOUND_WITH_ITEM_NAME: 'I\'m sorry, I currently do not know the command for %s. ',
-      NOT_FOUND_WITHOUT_ITEM_NAME: 'I\'m sorry, I currently do not know that command. ',
-      NOT_FOUND_REPROMPT: 'What else can I help with?',
     },
   },
   'en-US': {
@@ -238,52 +216,3 @@ const languageStrings = {
     },
   }
 };
-
-//Send message to user
-var AWS = require('aws-sdk');
-AWS.config.update({region: 'us-west-2'});
-  // Load the AWS SDK for Node.js
-// Set region
-// Create publish parameters
-var params = {
-  Message: 'MESSAGE_TEXT', /* required */
-  TopicArn:process.env.TopicArn
-};
-
-// Create promise and SNS service object
-var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
-
-// Handle promise's fulfilled/rejected states
-publishTextPromise.then(
-  function(data) {
-    console.log("Message ${params.Message} send sent to the topic ${params.TopicArn}");
-    console.log("MessageID is " + data.MessageId);
-  }).catch(
-    function(err) {
-    console.error(err, err.stack);
-  });
-
-
-  // TODO: sendCommandHandler fn
-//Function to ask and send git command 
-const askToSendText = {
-  canHandle(handlerInput){
-    const request = handlerInput.requestEnvelope.request;
-    return request.type === "IntentRequest" &&
-    (request.intent.name === "AMAZON.YesIntent");
-    // return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-    // && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NoIntent';
-  
-  },
-  handle(handlerInput) {
-     const askQuestion = requestAttributes.t('SEND_MESSAGE');
-  return handlerInput.responseBuilder
-  .speak(sessionAttributes.askQuestion)
-  .getResponse();
-  }
-
-  // const askQuestion = requestAttributes.t('SEND_MESSAGE');
-  // return handlerInput.responseBuilder
-  // .speak(sessionAttributes.askQuestion)
-  // .getResponse();
-}
