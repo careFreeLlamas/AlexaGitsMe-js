@@ -61,6 +61,7 @@ const getCommandHandler = {
         .speak(sessionAttributes.speakOutput)
         // .reprompt(sessionAttributes.repromptSpeech)
         .withSimpleCard(cardTitle, command)
+        .askToSendText() //calling function where it ask user to send message
         .getResponse();
     }
 
@@ -237,3 +238,52 @@ const languageStrings = {
     },
   }
 };
+
+//Send message to user
+var AWS = require('aws-sdk');
+AWS.config.update({region: 'us-west-2'});
+  // Load the AWS SDK for Node.js
+// Set region
+// Create publish parameters
+var params = {
+  Message: 'MESSAGE_TEXT', /* required */
+  TopicArn:process.env.TopicArn
+};
+
+// Create promise and SNS service object
+var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+
+// Handle promise's fulfilled/rejected states
+publishTextPromise.then(
+  function(data) {
+    console.log("Message ${params.Message} send sent to the topic ${params.TopicArn}");
+    console.log("MessageID is " + data.MessageId);
+  }).catch(
+    function(err) {
+    console.error(err, err.stack);
+  });
+
+
+  // TODO: sendCommandHandler fn
+//Function to ask and send git command 
+const askToSendText = {
+  canHandle(handlerInput){
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === "IntentRequest" &&
+    (request.intent.name === "AMAZON.YesIntent");
+    // return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+    // && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NoIntent';
+  
+  },
+  handle(handlerInput) {
+     const askQuestion = requestAttributes.t('SEND_MESSAGE');
+  return handlerInput.responseBuilder
+  .speak(sessionAttributes.askQuestion)
+  .getResponse();
+  }
+
+  // const askQuestion = requestAttributes.t('SEND_MESSAGE');
+  // return handlerInput.responseBuilder
+  // .speak(sessionAttributes.askQuestion)
+  // .getResponse();
+}
