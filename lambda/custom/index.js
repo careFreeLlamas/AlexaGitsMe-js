@@ -40,7 +40,6 @@ const getCommandHandler = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    // TODO: need to get action id instead of the value
     const actionSlot = handlerInput.requestEnvelope.request.intent.slots.action.resolutions.resolutionsPerAuthority[0].values[0].value.id;
     const thingSlot = handlerInput.requestEnvelope.request.intent.slots.thing.resolutions.resolutionsPerAuthority[0].values[0].value.id;
 
