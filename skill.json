@@ -1,26 +1,26 @@
 {
-  "skillManifest": {
+  "manifest": {
     "publishingInformation": {
       "locales": {
         "en-US": {
           "summary": "Spend some time coming up with an interesting, succinct description.",
           "examplePhrases": [
-            "Alexa open Minecraft Helper",
-            "Alexa ask Minecraft Helper what's the recipe for a chest",
-            "Alexa ask Minecraft Helper how do I get a map"
+            "Alexa open git help",
+            "Alexa ask git help what's the command for to redo a commit"
           ],
           "keywords": [
-            "Minecraft",
-            "game"
+            "git",
+            "github",
+            "version control"
           ],
-          "name": "Minecraft Helper",
+          "name": "gitHelp",
           "description": "Sample Full Description"
         },
         "de-DE": {
-          "name": "Assistent für Minecraft in Deutsch"
+          "name": "gitHelp"
         },
         "en-GB": {
-          "name": "British Minecraft Helper"
+          "name": "gitHelp"
         }
       },
       "isAvailableWorldwide": true,
@@ -32,7 +32,7 @@
       "custom": {
         "endpoint": {
           "sourceDir": "lambda/custom",
-          "uri": "ask-custom-how-to-default"
+          "uri": "ask-custom-gitHelp-default"
         }
       }
     },

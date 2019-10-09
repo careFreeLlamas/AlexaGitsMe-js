@@ -2,7 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
-const recipes = require('./recipes');
+const commands = require('./gitCommands');
 const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 
@@ -15,7 +15,8 @@ const LaunchRequestHandler = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    const item = requestAttributes.t(getRandomItem(Object.keys(recipes.RECIPE_EN_US)));
+    // TODO: this prints the gitCommand variable with underscores, line 18 and 21.
+    const item = requestAttributes.t(getRandomItem(Object.keys(commands.COMMAND_EN_US)));
 
     const speakOutput = requestAttributes.t('WELCOME_MESSAGE', requestAttributes.t('SKILL_NAME'), item);
     const repromptOutput = requestAttributes.t('WELCOME_REPROMPT');
@@ -29,28 +30,39 @@ const LaunchRequestHandler = {
   },
 };
 
-const RecipeHandler = {
+const getCommandHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'RecipeIntent';
+      && handlerInput.requestEnvelope.request.intent.name === 'getCommandIntent';
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    const itemSlot = handlerInput.requestEnvelope.request.intent.slots.Item;
-    let itemName;
-    if (itemSlot && itemSlot.value) {
-      itemName = itemSlot.value.toLowerCase();
-    }
+    // TODO: get slot values
+    /*
+      If below does not work, try this:
+      var slotValues = getSlotValues(this.event.request.intent.slots);
+      followLink(this.event, [slotValues['direction']['resolved'], slotValues['direction']['synonym']])
+    */
+    const actionSlot = handlerInput.requestEnvelope.request.intent.slots.action.value;
+    const thisSlot = handlerInput.requestEnvelope.request.intent.slots.this.value;
+    const thingSlot = handlerInput.requestEnvelope.request.intent.slots.thing.value;
 
-    const cardTitle = requestAttributes.t('DISPLAY_CARD_TITLE', requestAttributes.t('SKILL_NAME'), itemName);
-    const myRecipes = requestAttributes.t('RECIPES');
-    const recipe = myRecipes[itemName];
+    let commandReference;
+    if (thisSlot != null) {
+      commandReference = actionSlot.toLowerCase() + '_' + thisSlot.toLowerCase() + '_' + thingSlot.toLowerCase();
+    } 
+    commandReference = actionSlot.toLowerCase() + '_' + thingSlot.toLowerCase();
+
+
+    const cardTitle = requestAttributes.t('DISPLAY_CARD_TITLE', requestAttributes.t('SKILL_NAME'), commandReference);
+    const myCommands = requestAttributes.t('COMMANDS');
+    const command = myCommands[commandReference];
     let speakOutput = '';
 
-    if (recipe) {
-      sessionAttributes.speakOutput = recipe;
+    if (command) {
+      sessionAttributes.speakOutput = command;
       // uncomment the _2_ reprompt lines if you want to repeat the info
       // and prompt for a subsequent action
       // sessionAttributes.repromptSpeech = requestAttributes.t('RECIPE_REPEAT_MESSAGE');
@@ -59,14 +71,15 @@ const RecipeHandler = {
       return handlerInput.responseBuilder
         .speak(sessionAttributes.speakOutput)
         // .reprompt(sessionAttributes.repromptSpeech)
-        .withSimpleCard(cardTitle, recipe)
+        .withSimpleCard(cardTitle, command)
         .getResponse();
     }
-    const repromptSpeech = requestAttributes.t('RECIPE_NOT_FOUND_REPROMPT');
-    if (itemName) {
-      speakOutput += requestAttributes.t('RECIPE_NOT_FOUND_WITH_ITEM_NAME', itemName);
+
+    const repromptSpeech = requestAttributes.t('NOT_FOUND_REPROMPT');
+    if (commandReference) {
+      speakOutput += requestAttributes.t('NOT_FOUND_WITH_ITEM_NAME', commandReference);
     } else {
-      speakOutput += requestAttributes.t('RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME');
+      speakOutput += requestAttributes.t('NOT_FOUND_WITHOUT_ITEM_NAME');
     }
     speakOutput += repromptSpeech;
 
@@ -83,6 +96,9 @@ const RecipeHandler = {
   },
 };
 
+
+// TODO: sendCommandHandler fn
+
 const HelpHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -92,7 +108,7 @@ const HelpHandler = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    const item = requestAttributes.t(getRandomItem(Object.keys(recipes.RECIPE_EN_US)));
+    const item = requestAttributes.t(getRandomItem(Object.keys(commands.COMMAND_EN_US)));
 
     sessionAttributes.speakOutput = requestAttributes.t('HELP_MESSAGE', item);
     sessionAttributes.repromptSpeech = requestAttributes.t('HELP_REPROMPT', item);
@@ -192,7 +208,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    RecipeHandler,
+    getCommandHandler,
     HelpHandler,
     RepeatHandler,
     ExitHandler,
@@ -208,46 +224,24 @@ exports.handler = skillBuilder
 const languageStrings = {
   'en': {
     translation: {
-      RECIPES: recipes.RECIPE_EN_US,
-      SKILL_NAME: 'Minecraft Helper',
-      WELCOME_MESSAGE: 'Welcome to %s. You can ask a question like, what\'s the recipe for a %s? ... Now, what can I help you with?',
+      COMMANDS: commands.COMMAND_EN_US,
+      SKILL_NAME: 'gitHelp',
+      WELCOME_MESSAGE: 'Welcome to %s. You can ask a question like, what\'s the command for a %s? ... Now, what can I help you with?',
       WELCOME_REPROMPT: 'For instructions on what you can say, please say help me.',
-      DISPLAY_CARD_TITLE: '%s  - Recipe for %s.',
-      HELP_MESSAGE: 'You can ask questions such as, what\'s the recipe for a %s, or, you can say exit...Now, what can I help you with?',
-      HELP_REPROMPT: 'You can say things like, what\'s the recipe for a %s, or you can say exit...Now, what can I help you with?',
+      DISPLAY_CARD_TITLE: '%s  - Command for %s.',
+      HELP_MESSAGE: 'You can ask questions such as, what\'s the Command for a %s, or, you can say exit...Now, what can I help you with?',
+      HELP_REPROMPT: 'You can say things like, what\'s the command for a %s, or you can say exit...Now, what can I help you with?',
       STOP_MESSAGE: 'Goodbye!',
-      RECIPE_REPEAT_MESSAGE: 'Try saying repeat.',
-      RECIPE_NOT_FOUND_WITH_ITEM_NAME: 'I\'m sorry, I currently do not know the recipe for %s. ',
-      RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME: 'I\'m sorry, I currently do not know that recipe. ',
-      RECIPE_NOT_FOUND_REPROMPT: 'What else can I help with?',
+      REPEAT_MESSAGE: 'Try saying repeat.',
+      NOT_FOUND_WITH_ITEM_NAME: 'I\'m sorry, I currently do not know the command for %s. ',
+      NOT_FOUND_WITHOUT_ITEM_NAME: 'I\'m sorry, I currently do not know that command. ',
+      NOT_FOUND_REPROMPT: 'What else can I help with?',
     },
   },
   'en-US': {
     translation: {
-      RECIPES: recipes.RECIPE_EN_US,
-      SKILL_NAME: 'American Minecraft Helper',
+      COMMANDS: commands.COMMAND_EN_US,
+      SKILL_NAME: 'gitHelp',
     },
-  },
-  'en-GB': {
-    translation: {
-      RECIPES: recipes.RECIPE_EN_GB,
-      SKILL_NAME: 'British Minecraft Helper',
-    },
-  },
-  'de': {
-    translation: {
-      RECIPES: recipes.RECIPE_DE_DE,
-      SKILL_NAME: 'Assistent für Minecraft in Deutsch',
-      WELCOME_MESSAGE: 'Willkommen bei %s. Du kannst beispielsweise die Frage stellen: Welche Rezepte gibt es für eine %s? ... Nun, womit kann ich dir helfen?',
-      WELCOME_REPROMPT: 'Wenn du wissen möchtest, was du sagen kannst, sag einfach „Hilf mir“.',
-      DISPLAY_CARD_TITLE: '%s - Rezept für %s.',
-      HELP_MESSAGE: 'Du kannst beispielsweise Fragen stellen wie „Wie geht das Rezept für eine %s“ oder du kannst „Beenden“ sagen ... Wie kann ich dir helfen?',
-      HELP_REPROMPT: 'Du kannst beispielsweise Sachen sagen wie „Wie geht das Rezept für eine %s“ oder du kannst „Beenden“ sagen ... Wie kann ich dir helfen?',
-      STOP_MESSAGE: 'Auf Wiedersehen!',
-      RECIPE_REPEAT_MESSAGE: 'Sage einfach „Wiederholen“.',
-      RECIPE_NOT_FOUND_WITH_ITEM_NAME: 'Tut mir leid, ich kenne derzeit das Rezept für %s nicht. ',
-      RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME: 'Tut mir leid, ich kenne derzeit dieses Rezept nicht. ',
-      RECIPE_NOT_FOUND_REPROMPT: 'Womit kann ich dir sonst helfen?',
-    },
-  },
+  }
 };

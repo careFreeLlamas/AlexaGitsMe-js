@@ -1,9 +1,62 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "",
+      "skill_id": "amzn1.ask.skill.bcce3ee6-2cee-49be-8793-bece0fc956a1",
       "was_cloned": false,
-      "merge": {}
+      "merge": {},
+      "resources": {
+        "manifest": {
+          "eTag": "b300bb85332fa76da1a7a03cd6fa16f5"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "5203011c35a5947ce7f1dbf685e5a6c3"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-west-2:970800526166:function:ask-custom-gitHelp-default",
+            "awsRegion": "us-west-2",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-custom-gitHelp-default",
+            "handler": "index.handler",
+            "revisionId": "3d9e0329-31b2-4ba3-a8c2-475d651cd368",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
+    },
+    "careFreeLlama": {
+      "skill_id": "amzn1.ask.skill.633c0f4f-398b-4e01-ae0b-1927f9bb982d",
+      "was_cloned": false,
+      "merge": {},
+      "resources": {
+        "manifest": {
+          "eTag": "79c3c544df7bebf2f033d428a3ec1d61"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "ebb5c500788ce0a9c688f958fcd956b2"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:970800526166:function:ask-custom-gitHelp-default",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-custom-gitHelp-default",
+            "handler": "index.handler",
+            "revisionId": "f1efd21d-ad3e-4c01-9271-cc76927da756",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
     }
   }
 }
