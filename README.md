@@ -1,6 +1,7 @@
 # Alexa Gits Me
 
 This is an Alexa Skill that will answer user git questions, and, if you want, will send you a text with the command.
+This is not intended to be Git in its entirety, but an easy reference to the main commands.
 
 ## Software Requirements
 
@@ -15,12 +16,12 @@ This is an Alexa Skill that will answer user git questions, and, if you want, wi
 - _As a user_
 
   - I want to ask what is the command for a certain git action.
-  - I want to hear what is the command for a certain git action
+  - I want to hear what is the command for a certain git action.
   - I want a message sent to my phone so that I can see what it looks like, after I ask Alexa.
 
 - _As a developer_
-  - I want to create an Alexa skill that will answer a git question
-  - I want to give the user the correct git command to their git question
+  - I want to create an Alexa skill that will answer a git question.
+  - I want to give the user the correct git command to their git question.
   - I want to utilize Lambda functions as a way to adhere to SOLID principles.
   - I want to utilize an SNS Queue system to send a message to the user with the git command.
 

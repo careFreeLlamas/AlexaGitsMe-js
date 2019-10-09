@@ -3,6 +3,8 @@
 
 const Alexa = require('ask-sdk-core');
 const commands = require('./gitCommands');
+const utterances = require('./utterances');
+
 const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 
@@ -15,8 +17,8 @@ const LaunchRequestHandler = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    // TODO: this prints the gitCommand variable with underscores, line 18 and 21.
-    const item = requestAttributes.t(getRandomItem(Object.keys(commands.COMMAND_EN_US)));
+    // TODO: check that this comes from utterances file
+    const item = requestAttributes.t(getRandomItem(utterances.UTTERANCE_EN_US));
 
     const speakOutput = requestAttributes.t('WELCOME_MESSAGE', requestAttributes.t('SKILL_NAME'), item);
     const repromptOutput = requestAttributes.t('WELCOME_REPROMPT');
@@ -30,6 +32,7 @@ const LaunchRequestHandler = {
   },
 };
 
+// TODO: check to see if all work
 const getCommandHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -39,22 +42,11 @@ const getCommandHandler = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    // TODO: get slot values
-    /*
-      If below does not work, try this:
-      var slotValues = getSlotValues(this.event.request.intent.slots);
-      followLink(this.event, [slotValues['direction']['resolved'], slotValues['direction']['synonym']])
-    */
+    // TODO: need to get action id instead of the value
     const actionSlot = handlerInput.requestEnvelope.request.intent.slots.action.value;
-    const thisSlot = handlerInput.requestEnvelope.request.intent.slots.this.value;
     const thingSlot = handlerInput.requestEnvelope.request.intent.slots.thing.value;
 
-    let commandReference;
-    if (thisSlot != null) {
-      commandReference = actionSlot.toLowerCase() + '_' + thisSlot.toLowerCase() + '_' + thingSlot.toLowerCase();
-    } 
-    commandReference = actionSlot.toLowerCase() + '_' + thingSlot.toLowerCase();
-
+    let commandReference = actionSlot.toLowerCase() + '_' + thingSlot.toLowerCase();
 
     const cardTitle = requestAttributes.t('DISPLAY_CARD_TITLE', requestAttributes.t('SKILL_NAME'), commandReference);
     const myCommands = requestAttributes.t('COMMANDS');
@@ -77,7 +69,8 @@ const getCommandHandler = {
 
     const repromptSpeech = requestAttributes.t('NOT_FOUND_REPROMPT');
     if (commandReference) {
-      speakOutput += requestAttributes.t('NOT_FOUND_WITH_ITEM_NAME', commandReference);
+      // TODO: this should be the original command spoken not the commandReference
+      speakOutput += requestAttributes.t('NOT_FOUND_WITH_ITEM_NAME', handlerInput.requestEnvelope.request); 
     } else {
       speakOutput += requestAttributes.t('NOT_FOUND_WITHOUT_ITEM_NAME');
     }
@@ -219,18 +212,19 @@ exports.handler = skillBuilder
   .lambda();
 
 // langauge strings for localization
-// TODO: The items below this comment need your attention
+// TODO: Check these
 
 const languageStrings = {
   'en': {
     translation: {
+      UTTERANCES: utterances.UTTERANCE_EN_US,
       COMMANDS: commands.COMMAND_EN_US,
       SKILL_NAME: 'gitHelp',
-      WELCOME_MESSAGE: 'Welcome to %s. You can ask a question like, what\'s the command for a %s? ... Now, what can I help you with?',
+      WELCOME_MESSAGE: 'Welcome to %s. You can ask a question like, %s ... Now, what can I help you with?',
       WELCOME_REPROMPT: 'For instructions on what you can say, please say help me.',
       DISPLAY_CARD_TITLE: '%s  - Command for %s.',
-      HELP_MESSAGE: 'You can ask questions such as, what\'s the Command for a %s, or, you can say exit...Now, what can I help you with?',
-      HELP_REPROMPT: 'You can say things like, what\'s the command for a %s, or you can say exit...Now, what can I help you with?',
+      HELP_MESSAGE: 'You can ask questions such as, %s, or, you can say exit...Now, what can I help you with?',
+      HELP_REPROMPT: 'You can say things like, %s, or you can say exit...Now, what can I help you with?',
       STOP_MESSAGE: 'Goodbye!',
       REPEAT_MESSAGE: 'Try saying repeat.',
       NOT_FOUND_WITH_ITEM_NAME: 'I\'m sorry, I currently do not know the command for %s. ',
@@ -240,6 +234,7 @@ const languageStrings = {
   },
   'en-US': {
     translation: {
+      UTTERANCES: utterances.UTTERANCE_EN_US,
       COMMANDS: commands.COMMAND_EN_US,
       SKILL_NAME: 'gitHelp',
     },
