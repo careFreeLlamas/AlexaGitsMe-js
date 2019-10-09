@@ -17,7 +17,6 @@ const LaunchRequestHandler = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    // TODO: check that this comes from utterances file
     const item = requestAttributes.t(getRandomItem(utterances.UTTERANCE_EN_US));
 
     const speakOutput = requestAttributes.t('WELCOME_MESSAGE', requestAttributes.t('SKILL_NAME'), item);
@@ -32,7 +31,6 @@ const LaunchRequestHandler = {
   },
 };
 
-// TODO: check to see if all work
 const getCommandHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -42,9 +40,8 @@ const getCommandHandler = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-    // TODO: need to get action id instead of the value
-    const actionSlot = handlerInput.requestEnvelope.request.intent.slots.action.value;
-    const thingSlot = handlerInput.requestEnvelope.request.intent.slots.thing.value;
+    const actionSlot = handlerInput.requestEnvelope.request.intent.slots.action.resolutions.resolutionsPerAuthority[0].values[0].value.id;
+    const thingSlot = handlerInput.requestEnvelope.request.intent.slots.thing.resolutions.resolutionsPerAuthority[0].values[0].value.id;
 
     let commandReference = actionSlot.toLowerCase() + '_' + thingSlot.toLowerCase();
 
@@ -70,7 +67,7 @@ const getCommandHandler = {
     const repromptSpeech = requestAttributes.t('NOT_FOUND_REPROMPT');
     if (commandReference) {
       // TODO: this should be the original command spoken not the commandReference
-      speakOutput += requestAttributes.t('NOT_FOUND_WITH_ITEM_NAME', handlerInput.requestEnvelope.request); 
+      speakOutput += requestAttributes.t('NOT_FOUND_WITH_ITEM_NAME', commandReference); 
     } else {
       speakOutput += requestAttributes.t('NOT_FOUND_WITHOUT_ITEM_NAME');
     }
