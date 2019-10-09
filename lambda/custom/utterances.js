@@ -19,7 +19,7 @@ module.exports = {
     'What\'s the command to add changes to a file?',
     'Give me the command for adding a commit.',
     'Tell me the command for push to a remote branch?',
-    'What is the command for create a new repo?',
+    'What is the command for creating a new repo?',
     'What\'s the command for copying a repository?',
 
     'Give me the git command to get file changes to be committed.',

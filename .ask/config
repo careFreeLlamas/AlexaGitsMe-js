@@ -52,7 +52,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-gitHelp-default",
             "handler": "index.handler",
-            "revisionId": "5186d742-1fc8-4105-80e4-778e31f2dafd",
+            "revisionId": "40e68fa4-0811-40fa-8fda-730732803867",
             "runtime": "nodejs8.10"
           }
         ]
