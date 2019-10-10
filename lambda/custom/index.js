@@ -2,7 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
-const commands = require('./gitCommands').default;
+const commands = require('./gitCommands');
 const utterances = require('./utterances');
 
 const i18n = require('i18next');
@@ -192,7 +192,6 @@ exports.handler = skillBuilder
   .lambda();
 
 // langauge strings for localization
-// TODO: Check these
 
 const languageStrings = {
   'en': {
@@ -216,3 +215,6 @@ const languageStrings = {
     },
   }
 };
+
+
+
