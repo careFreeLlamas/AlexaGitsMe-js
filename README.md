@@ -1,6 +1,6 @@
 # Alexa Gits Me
 
-This is an Alexa Skill that will answer user git questions, and, if you want, will send you a text with the command.
+This is an Alexa Skill that will answer user git questions and, if you want, send you a text with the command.
 This is not intended to be Git in its entirety, but an easy reference to the main commands.
 
 ## Software Requirements
@@ -10,6 +10,7 @@ This is not intended to be Git in its entirety, but an easy reference to the mai
 ## Project Management Board
 
 [Trello](https://trello.com/b/KSdLCHPI/githow)
+[Google Spreadsheets](https://docs.google.com/spreadsheets/d/1U_7U3_fGZcbkNivKYB3JFaBJ5h62fV1uw4VmhI6rFM4/edit?usp=sharing)
 
 ## User Stories
 

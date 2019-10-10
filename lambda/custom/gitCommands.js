@@ -22,10 +22,10 @@ module.exports = {
     'get_file':'Git status lists all new or modified files to be commited',
     'undo_file':'Git reset [file] unstages the file, but preserve its contents',
     'create_branch':'Git branch-name creates a new branch, git branch dash b [branch-name] creates a new branch with the specified name and switches your working branch to that branch',
-    'switch_branch':'Git checkout [branch-name] switches to the specified branch and updates the working directory',
+    'update_branch':'Git checkout [branch-name] switches to the specified branch and updates the working directory',
     'merge_branch':'Git merge [branch] combines the specified branch’s history into the current branch',
+    'update_file':'Git mv [file-original] [file-renamed] changes the file name and prepares it for commit',
     'remove_branch':'Git branch dash d [branch-name] deletes the specified branch locally, git push dash d <remote_name> <branch_name> pushes the delete to remote',
     'remove_file':'Git rm [file] deletes the file from the working directory and stages the deletion, git rm dash dash cached [file] removes the file from version control but preserves the file locally',
-    'update_file':'Git mv [file-original] [file-renamed] changes the file name and prepares it for commit'
   }
 };
