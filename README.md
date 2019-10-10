@@ -5,7 +5,7 @@ This is not intended to be Git in its entirety, but an easy reference to the mai
 
 ## Software Requirements
 
-[Software Requirements](requirements.md)
+[Software Requirements](Requirement.md)
 
 ## Project Management Board
 
@@ -30,7 +30,7 @@ This is not intended to be Git in its entirety, but an easy reference to the mai
   
 [Decision Tree](https://app.moqups.com/uluAsPw28y/view/page/aa9df7b72)
 * White board image
-![White board image](assets/decision_tree.jpg)
+![White board image](assets/whiteboard_image.jpg)
 
 ## Resources
 
@@ -56,3 +56,14 @@ This is not intended to be Git in its entirety, but an easy reference to the mai
 [rttgg](https://github.com/rttgg)
 
 [BomiBear](https://github.com/bomibear)
+
+#### Starting Project using Alexa Skills Kit Command Line Interface(ASK CLI)
+* [Sign up for Alexa developer console](https://developer.amazon.com/) 
+* Install Node.js and npm. ASK CLI needs Node.js version 6 or higher
+* Setup AWS IAM user with required permissions: AWSLambdaExecute, AmazonSNSFullAccess, CloudWatchLogsFullAcess
+* Install ASK CLI for mac: ```npm install -g ask-cli```, for window: ``` npm install -g --production windows-build-tools```
+* The first time you use ASK CLI, you must use the ```ask init``` command to initialize ASK CLI 
+* Use ```ask new``` to create new skill project
+* Use ```ask deploy``` in the skill project directory to deploy it into alexa developer console
+* Test the skill in console 
+* To push the local changes to the remote version, use ```ask deploy``` or ```ask deploy --force``` 
