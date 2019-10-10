@@ -33,6 +33,7 @@ This is not intended to be Git in its entirety, but an easy reference to the mai
 ![White board image](assets/whiteboard_image.jpg)
 
 ## Resources
+Classmate: Jack
 
 [Tutorial](https://developer.amazon.com/blogs/alexa/post/a9ef18b2-ef68-44d4-86eb-dbdb293853bb/alexa-skill-recipe-making-http-requests-to-get-data-from-an-external-api) on how to make an Alexa Skill
 
