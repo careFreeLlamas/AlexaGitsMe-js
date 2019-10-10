@@ -40,6 +40,13 @@ This is not intended to be Git in its entirety, but an easy reference to the mai
 
 [Github Repo](https://github.com/alexa/skill-sample-nodejs-fact) of how to build an Alexa Skill
 
+[Medium.com](https://medium.com/@nils.backe/how-to-use-the-customer-profile-api-in-amazon-alexa-skills-671773c672f6) How to use the customer profile
+
+[Dabble Lab](https://www.youtube.com/watch?v=f0JhqODTDY8) Handling Yes and No responses in Alexa Skills
+
+[Publishing Messages](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/sns-examples-publishing-messages.html) How to publish messages 
+
+
 ## Team Members
 
 [sapanapoudel](https://github.com/sapanapoudel)
