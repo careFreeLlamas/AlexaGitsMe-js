@@ -1,10 +1,10 @@
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
+var AWS = require('aws-sdk');
 
 const Alexa = require('ask-sdk-core');
 const commands = require('./gitCommands');
 const utterances = require('./utterances');
-
 const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 
@@ -18,7 +18,6 @@ const LaunchRequestHandler = {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
     const item = requestAttributes.t(getRandomItem(utterances.UTTERANCE_EN_US));
-
     const speakOutput = requestAttributes.t('WELCOME_MESSAGE', requestAttributes.t('SKILL_NAME'), item);
     const repromptOutput = requestAttributes.t('WELCOME_REPROMPT');
 
@@ -50,12 +49,28 @@ const getCommandHandler = {
     let speakOutput = '';
 
     if (command) {
-      sessionAttributes.speakOutput = command;
+      const secondPrompt = '. Would you like me to send that command?';
+      sessionAttributes.speakOutput = command + secondPrompt;
       handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-
+      const repromptText = "Would you like me to send that command?";
+      var params = {
+        Message: command, /* required */
+        TopicArn: TopicArn
+      };
+      // Create promise and SNS service object
+      var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+      // Handle promise's fulfilled/rejected states
+      publishTextPromise.then(
+        function(data) {
+          console.log("Message ${params.Message} send sent to the topic ${params.TopicArn}");
+          console.log("MessageID is " + data.MessageId);
+        }).catch(
+          function(err) {
+          console.error(err, err.stack);
+        });
       return handlerInput.responseBuilder
         .speak(sessionAttributes.speakOutput)
-        // .addDelegateDirective('sendCommandIntent') // TODO: check to see if this works.
+        .reprompt(repromptText)
         .getResponse();
     }
 
@@ -70,7 +85,33 @@ const getCommandHandler = {
   },
 };
 
-// TODO: sendCommandHandler fn
+const YesIntentHandler = {
+  canHandle(handlerInput){
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.YesIntent';
+  },
+  handle(handlerInput){
+    const speechText = "Ok, I will send you a message";
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .getResponse();
+  }
+}
+
+const NoIntentHandler = {
+  canHandle(handlerInput){
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NoIntent';
+  },
+  handle(handlerInput){
+    const speechText = "Hope you enjoyed the service.";
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .getResponse();
+  }
+}
 
 const HelpHandler = {
   canHandle(handlerInput) {
@@ -182,10 +223,12 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
     getCommandHandler,
+    YesIntentHandler,
+    NoIntentHandler,
     HelpHandler,
     RepeatHandler,
     ExitHandler,
-    SessionEndedRequestHandler,
+    SessionEndedRequestHandler
   )
   .addRequestInterceptors(LocalizationInterceptor)
   .addErrorHandlers(ErrorHandler)
@@ -215,6 +258,5 @@ const languageStrings = {
     },
   }
 };
-
 
 

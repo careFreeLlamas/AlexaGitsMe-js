@@ -47,6 +47,8 @@ Classmate: Jack
 
 [Publishing Messages](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/sns-examples-publishing-messages.html) How to publish messages 
 
+## Output
+![Final Output of Working Application](assets/finalWorkingStage.png)
 
 ## Team Members
 

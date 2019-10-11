@@ -3,7 +3,7 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "summary": "Spend some time coming up with an interesting, succinct description.",
+          "summary": "Got a git question?  Ask this Alexa skill!",
           "examplePhrases": [
             "Alexa open git help",
             "Alexa ask git help what's the command for to redo a commit"
@@ -24,7 +24,7 @@
         }
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "Sample Testing Instructions.",
+      "testingInstructions": "Use to the Alexa Developer Console",
       "category": "EDUCATION_AND_REFERENCE",
       "distributionCountries": []
     },
