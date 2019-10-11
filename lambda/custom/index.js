@@ -5,6 +5,7 @@ var AWS = require('aws-sdk');
 const Alexa = require('ask-sdk-core');
 const commands = require('./gitCommands');
 const utterances = require('./utterances');
+const textCommands = require('./textCommands');
 const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 
@@ -48,24 +49,28 @@ const getCommandHandler = {
     const command = myCommands[commandReference];
     let speakOutput = '';
 
+    const myTextCommands = requestAttributes.t('TEXTCOMMANDS');
+    const textCommand = myTextCommands[commandReference];
+
+
     if (command) {
       const secondPrompt = '. Would you like me to send that command?';
       sessionAttributes.speakOutput = command + secondPrompt;
       handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-      const repromptText = "Would you like me to send that command?";
+      const repromptText = 'Would you like me to send that command?';
       var params = {
-        Message: command, /* required */
-        TopicArn: TopicArn
+        Message: textCommand, /* required */
+        TopicArn: 'TopicArn'
       };
       // Create promise and SNS service object
       var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
       // Handle promise's fulfilled/rejected states
       publishTextPromise.then(
         function(data) {
-          console.log("Message ${params.Message} send sent to the topic ${params.TopicArn}");
-          console.log("MessageID is " + data.MessageId);
+          console.log('Message ${params.Message} send sent to the topic ${params.TopicArn}');
+          console.log('MessageID is ' + data.MessageId);
         }).catch(
-          function(err) {
+        function(err) {
           console.error(err, err.stack);
         });
       return handlerInput.responseBuilder
@@ -91,7 +96,7 @@ const YesIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.YesIntent';
   },
   handle(handlerInput){
-    const speechText = "Ok, I will send you a message";
+    const speechText = 'Ok, I will send you a message';
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
@@ -105,7 +110,7 @@ const NoIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NoIntent';
   },
   handle(handlerInput){
-    const speechText = "Hope you enjoyed the service.";
+    const speechText = 'Hope you enjoyed the service.';
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
@@ -241,6 +246,7 @@ const languageStrings = {
     translation: {
       UTTERANCES: utterances.UTTERANCE_EN_US,
       COMMANDS: commands.COMMAND_EN_US,
+      TEXTCOMMANDS: textCommands.TEXTCOMMAND_EN_US,
       SKILL_NAME: 'gitHelp',
       WELCOME_MESSAGE: 'Welcome to %s. You can ask a question like, %s ... Now, what can I help you with?',
       WELCOME_REPROMPT: 'For instructions on what you can say, please say help me.',
@@ -254,6 +260,7 @@ const languageStrings = {
     translation: {
       UTTERANCES: utterances.UTTERANCE_EN_US,
       COMMANDS: commands.COMMAND_EN_US,
+      TEXTCOMMANDS: textCommands.TEXTCOMMAND_EN_US,
       SKILL_NAME: 'gitHelp',
     },
   }

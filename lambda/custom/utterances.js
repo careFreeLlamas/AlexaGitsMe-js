@@ -25,7 +25,6 @@ module.exports = {
     'Tell me the git command to unstage a file',
     'What is the git command to create a new branch',
     'What\'s the git command to switch to another branch',
-    'Give me the git command for changing a file name',
-    'How do I remove a branch'
+    'Give me the git command for changing a file name'
   ]
 };

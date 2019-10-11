@@ -9,8 +9,8 @@ This is not intended to be Git in its entirety, but an easy reference to the mai
 
 ## Project Management Board
 
-[Trello](https://trello.com/b/KSdLCHPI/githow)
-[Google Spreadsheets](https://docs.google.com/spreadsheets/d/1U_7U3_fGZcbkNivKYB3JFaBJ5h62fV1uw4VmhI6rFM4/edit?usp=sharing)
+* [Trello](https://trello.com/b/KSdLCHPI/githow)
+* [Google Spreadsheets](https://docs.google.com/spreadsheets/d/1U_7U3_fGZcbkNivKYB3JFaBJ5h62fV1uw4VmhI6rFM4/edit?usp=sharing)
 
 ## User Stories
 
