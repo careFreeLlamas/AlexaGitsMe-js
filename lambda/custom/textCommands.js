@@ -1,10 +1,10 @@
 /* eslint-disable no-irregular-whitespace */
-/* eslint-disable  func-names */
-/* eslint-disable max-len */
-/* eslint quote-props: ['error', 'consistent'] */
-module.exports = {
+/* eslint-disable  func-names */
+/* eslint-disable max-len */
+/* eslint quote-props: ['error', 'consistent'] */
+module.exports = {
   'COMMAND_EN_US':{
-    'save_changeset':'Git stash - will temporarily store any changes you have made since your last commit.',
+    'save_changeset':'Git stash - will temporarily store any changes you have made since your last commit.',
     'restore_changeset':'Git stash pop OR git stash apply - will restore the most recently stashed files.',
     'get_changeset':'Git stash list - lists all stashed changesets.',
     'remove_changeset':'Git stash drop - will discards the most recently stashed changeset.',

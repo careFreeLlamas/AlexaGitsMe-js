@@ -33,13 +33,27 @@
                         {
                             "name": "thing",
                             "type": "LIST_OF_THINGS"
-                        },
-                        {
-                            "name": "this",
-                            "type": "LIST_OF_THIS"
                         }
                     ],
                     "samples": [
+                        "Give me the git command to {action} something {thing}",
+                        "Tell me the git command to {action} something {thing}",
+                        "What is the git command to {action} something {thing}",
+                        "What's the git command to {action} something {thing}",
+                        "How do I {action} something {thing}",
+                        "How do you {action} something {thing}",
+                        "Give me the git command for {action} something {thing}",
+                        "Tell me the git command for {action} something {thing}",
+                        "What is the git command for {action} something {thing}",
+                        "What's the git command for {action} something {thing}",
+                        "Give me the command to {action} something {thing}",
+                        "Tell me the command to {action} something {thing}",
+                        "What is the command to {action} something {thing}",
+                        "What's the command to {action} something {thing}",
+                        "Give me the command for {action} something {thing}",
+                        "Tell me the command for {action} something {thing}",
+                        "What is the command for {action} something {thing}",
+                        "What's the command for {action} something {thing}",
                         "Give me the git command to {action} {thing}",
                         "Tell me the git command to {action} {thing}",
                         "What is the git command to  {action} {thing}",
@@ -52,32 +66,39 @@
                         "What's the git command for {action} {thing}",
                         "Give me the command to {action} {thing}",
                         "Tell me the command to {action} {thing}",
-                        "What is the command to  {action} {thing}",
+                        "What is the command to {action} {thing}",
                         "What's the command to {action} {thing}",
                         "Give me the command for {action} {thing}",
                         "Tell me the command for {action} {thing}",
                         "What is the command for {action} {thing}",
-                        "What's the command for {action} {thing}",
-                        "Give me the command to {action} the {this} for {thing}",
-                        "Give me the command for {action} the {this} for {thing}",
-                        "Tell me the command to {action} the {this} for {thing}",
-                        "Tell me the command for {action} the {this} for {thing}",
-                        "What is the command to {action} the {this} for {thing}",
-                        "What is the command for  {action} the {this} for {thing}",
-                        "What's the command to  {action} the {this} for {thing}",
-                        "What's the command for {action} the {this} for {thing}",
-                        "How do I {action} the {this} for {thing}",
-                        "How do you {action} the {this} for {thing}",
-                        "Give me the command to {action} the {this} {thing}",
-                        "Give me the git command to {action} the {this} for {thing}",
-                        "Give me the git command for {action} the {this} for {thing}",
-                        "Tell me the git command to {action} the {this} for {thing}",
-                        "Tell me the git command for {action} the {this} for {thing}",
-                        "What is the git command to {action} the {this} for {thing}",
-                        "What is the git command for  {action} the {this} for {thing}",
-                        "What's the git command to  {action} the {this} for {thing}",
-                        "What's the git command for {action} the {this} for {thing}",
-                        "Give me the git command to {action} the {this} {thing}"
+                        "What's the command for {action} {thing}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": [
+                        "ok",
+                        "yup",
+                        "ya",
+                        "yes"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": [
+                        "sorry",
+                        "nien",
+                        "nyet",
+                        "nah",
+                        "nope",
+                        "no"
+                    ]
+                },
+                {
+                    "name": "sendCommandIntent",
+                    "slots": [],
+                    "samples": [
+                        "send command"
                     ]
                 }
             ],
@@ -85,6 +106,130 @@
                 {
                     "name": "LIST_OF_ACTIONS",
                     "values": [
+                        {
+                            "id": "update",
+                            "name": {
+                                "value": "update",
+                                "synonyms": [
+                                    "change ",
+                                    " change ",
+                                    " change",
+                                    " switching ",
+                                    " switching",
+                                    "switching",
+                                    "moving over to",
+                                    "moving over to ",
+                                    "moving over to",
+                                    " checkout ",
+                                    " checkout",
+                                    "checkout",
+                                    "switch",
+                                    "change a",
+                                    "change a ",
+                                    " change a",
+                                    " change a ",
+                                    " changing",
+                                    "changing ",
+                                    "changing a ",
+                                    "changing a",
+                                    " changing a ",
+                                    " changing a",
+                                    "changing a",
+                                    "changing",
+                                    "change",
+                                    "amending",
+                                    "updating",
+                                    "amend",
+                                    "update"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "merge",
+                            "name": {
+                                "value": "merge",
+                                "synonyms": [
+                                    "merge",
+                                    "combining",
+                                    "merging",
+                                    "combines",
+                                    "combine"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "copy",
+                            "name": {
+                                "value": "copy",
+                                "synonyms": [
+                                    "get a copy",
+                                    "downloading",
+                                    "download",
+                                    "cloning",
+                                    "copying",
+                                    "clone",
+                                    "copy"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "create",
+                            "name": {
+                                "value": "create",
+                                "synonyms": [
+                                    "making",
+                                    "make",
+                                    "creating",
+                                    "create"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "undo",
+                            "name": {
+                                "value": "undo",
+                                "synonyms": [
+                                    "resetting a",
+                                    "unstaging",
+                                    "unstage",
+                                    "reverting",
+                                    "revert",
+                                    "going back",
+                                    "go back",
+                                    "resetting",
+                                    "undoing",
+                                    "reset",
+                                    "undo"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "add",
+                            "name": {
+                                "value": "add",
+                                "synonyms": [
+                                    "push to a",
+                                    "push to a ",
+                                    "push to ",
+                                    " push to ",
+                                    " push",
+                                    "push to",
+                                    "adding a ",
+                                    " adding a",
+                                    " adding a ",
+                                    "add changes to a",
+                                    "add changes to",
+                                    "add changes",
+                                    "adding a",
+                                    "uploading",
+                                    "pushing",
+                                    "adding",
+                                    "push",
+                                    "add",
+                                    "upload"
+                                ]
+                            }
+                        },
                         {
                             "id": "restore",
                             "name": {
@@ -103,6 +248,15 @@
                             "name": {
                                 "value": "remove",
                                 "synonyms": [
+                                    " remove a ",
+                                    " remove a",
+                                    "remove a",
+                                    "remove ",
+                                    "delete a ",
+                                    " delete a ",
+                                    "delete a",
+                                    "deleting",
+                                    "delete",
                                     "dropping",
                                     "getting rid of",
                                     "trashing",
@@ -120,6 +274,19 @@
                             "name": {
                                 "value": "get",
                                 "synonyms": [
+                                    " pull from a",
+                                    " pull from",
+                                    " pull",
+                                    "pull from ",
+                                    "pull",
+                                    "pull from a",
+                                    "pull from",
+                                    "pulling",
+                                    "pull",
+                                    "fetching",
+                                    "fetch",
+                                    "listing",
+                                    "list",
                                     "reviewing",
                                     "review",
                                     "seeing",
@@ -158,10 +325,103 @@
                     "name": "LIST_OF_THINGS",
                     "values": [
                         {
-                            "id": "stashed-changeset",
+                            "id": "differences",
                             "name": {
-                                "value": "stashed changeset",
+                                "value": "differences",
                                 "synonyms": [
+                                    "branch's changes",
+                                    "file's changes",
+                                    "a file's changes",
+                                    "a branch's changes",
+                                    "branch changes",
+                                    "file changes",
+                                    "file differences",
+                                    "branch differences",
+                                    "differences between branches",
+                                    "differences between files",
+                                    "diff",
+                                    "differences"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "history",
+                            "name": {
+                                "value": "history",
+                                "synonyms": [
+                                    "the history for a file",
+                                    "the history for a branch",
+                                    "the history of a file",
+                                    "the history of a branch",
+                                    "file logs",
+                                    "file's log",
+                                    "file's logs",
+                                    "file log",
+                                    "a file's logs",
+                                    "a file's log",
+                                    "a branch's version history",
+                                    "a branch's log",
+                                    "a branch's logs",
+                                    "a branch's history",
+                                    "a file's history",
+                                    "file history",
+                                    "branch history",
+                                    "history of a file",
+                                    "history of a branch",
+                                    "logs",
+                                    "log",
+                                    "version history",
+                                    "history"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "repository",
+                            "name": {
+                                "value": "repository",
+                                "synonyms": [
+                                    "from repo",
+                                    "from a repository",
+                                    "from a repo",
+                                    "from repository",
+                                    "a repository",
+                                    "repository",
+                                    "repo",
+                                    "a repo",
+                                    "a new repository",
+                                    "a new repo"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "changeset",
+                            "name": {
+                                "value": "changeset",
+                                "synonyms": [
+                                    "from stash",
+                                    "from a stash",
+                                    "all stored files",
+                                    "stored files",
+                                    "stored stashes",
+                                    "all stored stashes",
+                                    "all stored",
+                                    "all stashed changesets",
+                                    "all stashed",
+                                    "stash list",
+                                    "change list",
+                                    "list",
+                                    "changesets",
+                                    "list of changes",
+                                    "changesets",
+                                    "recent changes",
+                                    "recently stashed",
+                                    "all changes",
+                                    "all the changes",
+                                    "stashed",
+                                    "changed files",
+                                    "differences",
+                                    "difference",
+                                    "stashed changeset",
                                     "a recent stash",
                                     "a recently stashed changeset",
                                     "a stashed changeset",
@@ -174,37 +434,26 @@
                             }
                         },
                         {
-                            "id": "stash-list",
+                            "id": "file",
                             "name": {
-                                "value": "stash list",
+                                "value": "file",
                                 "synonyms": [
-                                    "list",
-                                    "change list",
-                                    "stash list",
-                                    "all stashed changesets"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "stashed",
-                            "name": {
-                                "value": "stashed",
-                                "synonyms": [
-                                    "all the changes",
-                                    "all changes",
-                                    "changes",
-                                    "recently stashed",
-                                    "recent changes"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "files",
-                            "name": {
-                                "value": "a file",
-                                "synonyms": [
-                                    "changed files",
-                                    "changes",
+                                    "file name ",
+                                    " file name",
+                                    " a file name",
+                                    "a file name ",
+                                    "a file name ",
+                                    "a file name",
+                                    "file name",
+                                    "file changes to be commited",
+                                    "a file change",
+                                    "file changes",
+                                    "changes to a file",
+                                    "from file",
+                                    "from a file",
+                                    "a file",
+                                    "file",
+                                    "a file",
                                     "files"
                                 ]
                             }
@@ -214,9 +463,25 @@
                             "name": {
                                 "value": "branch",
                                 "synonyms": [
+                                    " a branch",
+                                    "a branch ",
+                                    "a branch ",
+                                    " a branch",
+                                    "a remote branch",
+                                    "remote branch",
+                                    "another branch",
+                                    "new branch",
+                                    "a new branch",
+                                    "to remote branch",
+                                    "to a remote branch",
+                                    "to a branch",
+                                    "two branches",
+                                    "working branches",
+                                    "from this branch",
+                                    "from a branch",
+                                    "from branch",
                                     "the current branch",
                                     "a branch",
-                                    "between two branches",
                                     "branches"
                                 ]
                             }
@@ -226,96 +491,23 @@
                             "name": {
                                 "value": "commit",
                                 "synonyms": [
+                                    "from this commit",
+                                    "from commit",
+                                    "from a commit",
+                                    "to a specified commit",
+                                    "to a commit",
+                                    "specified commit",
+                                    "specific commit",
+                                    "a specified commit",
+                                    "a specific commit",
                                     "commit",
                                     "a commit"
                                 ]
                             }
                         }
                     ]
-                },
-                {
-                    "name": "LIST_OF_THIS",
-                    "values": [
-                        {
-                            "id": "changes",
-                            "name": {
-                                "value": "changes",
-                                "synonyms": [
-                                    "differences"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "history",
-                            "name": {
-                                "value": "history",
-                                "synonyms": [
-                                    "logs",
-                                    "log",
-                                    "version history"
-                                ]
-                            }
-                        }
-                    ]
                 }
             ]
-        },
-        "dialog": {
-            "intents": [
-                {
-                    "name": "getCommandIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "action",
-                            "type": "LIST_OF_ACTIONS",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1233920902757.398493823284"
-                            }
-                        },
-                        {
-                            "name": "thing",
-                            "type": "LIST_OF_THINGS",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1233920902757.237663492935"
-                            }
-                        },
-                        {
-                            "name": "this",
-                            "type": "LIST_OF_THIS",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        }
-                    ]
-                }
-            ],
-            "delegationStrategy": "ALWAYS"
-        },
-        "prompts": [
-            {
-                "id": "Elicit.Slot.1233920902757.398493823284",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What action do you want to take?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1233920902757.237663492935",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What do you want to do?"
-                    }
-                ]
-            }
-        ]
+        }
     }
 }

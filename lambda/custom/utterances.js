@@ -1,8 +1,8 @@
 /* eslint-disable no-irregular-whitespace */
-/* eslint-disable  func-names */
-/* eslint-disable max-len */
-/* eslint quote-props: ['error', 'consistent'] */
-module.exports = {
+/* eslint-disable  func-names */
+/* eslint-disable max-len */
+/* eslint quote-props: ['error', 'consistent'] */
+module.exports = {
   'UTTERANCE_EN_US':[
     'Give me the git command to store changes',
     'Tell me the git command to restore recently stashed',
@@ -26,7 +26,6 @@ module.exports = {
     'What is the git command to create a new branch',
     'What\'s the git command to switch to another branch',
     'Give me the git command for changing a file name',
-    'How do I remove a branch',
-    'How do I delete a file',
+    'How do I remove a branch'
   ]
 };
